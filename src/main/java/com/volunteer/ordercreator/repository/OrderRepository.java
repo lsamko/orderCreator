@@ -3,16 +3,15 @@ package com.volunteer.ordercreator.repository;
 import com.volunteer.ordercreator.entity.Order;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrderRepository {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    Optional<Order> findOrderId(String uuid);
+    Optional<Order> findOrderById(String uuid);
 
     Optional<Order> deleteOrderByOrderId(String uuid);
 
-    List<Order> findOrdersByOrderIdIn(List<String> ids);
-
-    boolean existsOrderByName(String name);
+    boolean existsOrderByOrderName(String name);
 }
