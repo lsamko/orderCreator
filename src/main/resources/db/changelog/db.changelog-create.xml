@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1_0_0_001" author="liudmyla">
+        <createTable tableName="order">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                    primaryKey="true" primaryKeyName="pk_order" validatePrimaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints
+                    unique="true" uniqueConstraintName="uk_order_name" validateUnique="true"
+                    nullable="false" notNullConstraintName="nn_order_name" validateNullable="true"/>
+            </column>
+            <column name="orderId" type="varchar(255)">
+                <constraints
+                    nullable="false" notNullConstraintName="nn_order_id" validateNullable="true"
+                    unique="true" uniqueConstraintName="uk_order_id" validateUnique="true"/>
+            </column>
+            <column name="price" type="double"/>
+            <column name="quantity" type="int">
+                <constraints
+                nullable="false" notNullConstraintName="nn_order_quantity" validateNullable="true"/>
+            </column>
+            <column name="priority" type="int"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
