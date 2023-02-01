@@ -1,17 +1,18 @@
 package com.volunteer.ordercreator.dto;
 
-
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class OrderResponseDto {
 
     private String orderName;
     private String orderId;
     private Integer quantity;
-    private Double price;
+    private Integer price;
     private Integer priority;
 
 }

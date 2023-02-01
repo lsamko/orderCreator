@@ -19,7 +19,7 @@
                     nullable="false" notNullConstraintName="nn_order_id" validateNullable="true"
                     unique="true" uniqueConstraintName="uk_order_id" validateUnique="true"/>
             </column>
-            <column name="price" type="double"/>
+            <column name="price" type="int"/>
             <column name="quantity" type="int">
                 <constraints
                 nullable="false" notNullConstraintName="nn_order_quantity" validateNullable="true"/>

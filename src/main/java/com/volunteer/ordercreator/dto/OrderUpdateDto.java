@@ -5,10 +5,12 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class OrderUpdateDto {
 
@@ -21,13 +23,13 @@ public class OrderUpdateDto {
     private Integer quantity;
 
     @Min(1)
-    private Double price;
+    private Integer price;
 
     @Min(1)
     @Max(5)
     private Integer priority;
 
-    public OrderUpdateDto name (String orderName) {
+    public OrderUpdateDto name(String orderName) {
         this.orderName = orderName;
         return this;
     }

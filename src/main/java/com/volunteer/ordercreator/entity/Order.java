@@ -7,14 +7,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.io.Serializable;
-import lombok.Data;
+import java.util.Objects;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
-
+import org.hibernate.Hibernate;
 
 @Entity
-@NoArgsConstructor
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @ToString
 public class Order implements Serializable {
 
@@ -33,7 +37,7 @@ public class Order implements Serializable {
 
     @Basic
     @Column
-    private Double price;
+    private Integer price;
 
     @Basic
     @Column(length = 16)
@@ -43,5 +47,20 @@ public class Order implements Serializable {
     @Column(unique = true, nullable = false)
     private String orderId;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
+        Order order = (Order) o;
+        return id != null && Objects.equals(id, order.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

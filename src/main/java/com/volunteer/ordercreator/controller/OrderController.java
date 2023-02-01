@@ -3,12 +3,13 @@ package com.volunteer.ordercreator.controller;
 import com.volunteer.ordercreator.dto.OrderRequestDto;
 import com.volunteer.ordercreator.dto.OrderResponseDto;
 import com.volunteer.ordercreator.dto.OrderUpdateDto;
+import com.volunteer.ordercreator.entity.Order;
 import com.volunteer.ordercreator.service.OrderService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,10 +36,8 @@ public class OrderController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderResponseDto> getAllOrders(@RequestParam(value = "from", defaultValue = "0") @Min(0)
-    @Valid Integer from, @RequestParam(value = "size", defaultValue = "10")
-    @Min(10) @Max(10000) @Valid Integer size) {
-        return orderService.findAll(from, size);
+    public Page<Order> getAllOrders(@NotNull Pageable pageable){
+        return orderService.findAll(pageable);
     }
 
     @GetMapping("/{uuid}")

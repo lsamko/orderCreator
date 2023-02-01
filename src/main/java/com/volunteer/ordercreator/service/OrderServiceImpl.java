@@ -8,10 +8,8 @@ import com.volunteer.ordercreator.exception.OrderNotFoundException;
 import com.volunteer.ordercreator.exception.OrderWithNameAlreadyExistsException;
 import com.volunteer.ordercreator.mapper.OrderMapper;
 import com.volunteer.ordercreator.repository.OrderRepository;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,6 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
-    private static final String ORDER_ID_NOT_FOUND= "Order with ID '%s' is not found";
 
     @Override
     public OrderResponseDto createOrder(OrderRequestDto orderRequestDto) {
@@ -29,43 +26,42 @@ public class OrderServiceImpl implements OrderService {
         String orderName = orderRequestDto.getOrderName();
         if (this.orderNameExists(orderName)) {
             throw new OrderWithNameAlreadyExistsException(
-                String.format("Order with name '%s' already exists", orderName));
+                String.format(orderName));
         }
         Order orderToSave = orderRepository.save(order);
         return orderMapper.fromEntityToResponseDto(orderToSave);
     }
 
     @Override
-    public List<OrderResponseDto> findAll(Integer from, Integer size) {
-        Pageable page = PageRequest.of(from, size);
-        Page<Order> order = orderRepository.findAll(page);
-        return orderMapper.fromEntityListToResponseDtoList(order.getContent());
+    public Page<Order> findAll(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 
     @Override
     public OrderResponseDto findById(String uuid) {
         Order order = orderRepository.findOrderById(uuid)
-            .orElseThrow(() ->new OrderNotFoundException(String.format(ORDER_ID_NOT_FOUND, uuid)));
+            .orElseThrow(() -> new OrderNotFoundException(uuid));
         return orderMapper.fromEntityToResponseDto(order);
     }
 
     @Override
     public OrderResponseDto deleteById(String uuid) {
         Order order = orderRepository.deleteOrderByOrderId(uuid)
-            .orElseThrow(() -> new OrderNotFoundException(String.format(ORDER_ID_NOT_FOUND, uuid)));
+            .orElseThrow(() -> new OrderNotFoundException(uuid));
         return orderMapper.fromEntityToResponseDto(order);
     }
 
     @Override
     public OrderResponseDto updateById(String uuid, OrderUpdateDto orderUpdateDto) {
         Order nameToUpdate = orderRepository.findOrderById(uuid)
-            .orElseThrow(() ->new OrderNotFoundException(String.format(ORDER_ID_NOT_FOUND, uuid)));
-          String newOrderName = orderUpdateDto.getOrderName();
-          if (this.orderNameChanged(nameToUpdate, newOrderName) && this.orderNameExists(newOrderName)){
-              throw new OrderWithNameAlreadyExistsException(String.format("Order with name '%s' already exists", newOrderName));
-          }
-          nameToUpdate.setOrderName(newOrderName);
-          orderRepository.save(nameToUpdate);
+            .orElseThrow(() -> new OrderNotFoundException(uuid));
+        String newOrderName = orderUpdateDto.getOrderName();
+        if (this.orderNameChanged(nameToUpdate, newOrderName) && this.orderNameExists(newOrderName)) {
+            throw new OrderWithNameAlreadyExistsException(
+                String.format("Order with name '%s' already exists", newOrderName));
+        }
+        nameToUpdate.setOrderName(newOrderName);
+        orderRepository.save(nameToUpdate);
         return orderMapper.fromEntityToResponseDto(nameToUpdate);
     }
 
