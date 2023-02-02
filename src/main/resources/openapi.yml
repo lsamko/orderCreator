@@ -1,0 +1,49 @@
+openapi: 3.0.3
+info:
+  title: Order creator
+  description: Order creator
+  version: 1.0.0
+tags:
+  - name: orders
+paths:
+  /orders:
+    post:
+      tags:
+        - orders
+      description: Creates an order
+      operationId: createOrders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/order-request-dto'
+      responses:
+        '201':
+          description: The order has been created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-response-dto'
+
+components:
+  schemas:
+    order-request-dto:
+      title: OrderRequestDto
+      type: object
+      properties:
+        orderName:
+          type: string
+          minLength: 1
+          maxLength: 50
+          example: new Order
+
+    order-response-dto:
+      title: OrderResponseDto
+      type: object
+      properties:
+        orderName:
+          type: string
+          minLength: 1
+          maxLength: 50
+          example: new Order

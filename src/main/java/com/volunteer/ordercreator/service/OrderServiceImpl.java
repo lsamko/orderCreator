@@ -8,6 +8,7 @@ import com.volunteer.ordercreator.exception.OrderNotFoundException;
 import com.volunteer.ordercreator.exception.OrderWithNameAlreadyExistsException;
 import com.volunteer.ordercreator.mapper.OrderMapper;
 import com.volunteer.ordercreator.repository.OrderRepository;
+import java.util.function.Function;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,8 +34,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<Order> findAll(Pageable pageable) {
-        return orderRepository.findAll(pageable);
+    public Page<OrderResponseDto> findAll(Pageable pageable) {
+        return orderRepository.findAll(pageable).map(orderMapper::fromEntityToResponseDto) ;
     }
 
     @Override
