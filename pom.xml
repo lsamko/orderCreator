@@ -117,11 +117,13 @@
                             <inputSpec>${project.basedir}/src/main/resources/openapi.yml</inputSpec>
                             <generatorName>spring</generatorName>
                             <library>spring-boot</library>
+                            <generateSupportingFiles>false</generateSupportingFiles>
                             <configOptions>
-                                <apiFirst>true</apiFirst>
+                                <annotationLibrary>none</annotationLibrary>
+                                <documentationProvider>none</documentationProvider>
                                 <interfaceOnly>true</interfaceOnly>
                                 <openApiNullable>false</openApiNullable>
-                                <performBeanValidation>true</performBeanValidation>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
                                 <modelPackage>com.volunteer.ordercreator.dto</modelPackage>
                                 <apiPackage>com.volunteer.ordercreator.controller</apiPackage>
                                 <skipDefaultInterface>true</skipDefaultInterface>
