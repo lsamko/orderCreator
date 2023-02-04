@@ -25,11 +25,94 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/order-response-dto'
-
+    get:
+      tags:
+        - orders
+      description: Retrieve list of orders
+      operationId: getListOfOrders
+      responses:
+        '200':
+          description: The order has been created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-response-dto'
+  /orders/{orderId}:
+    get:
+      tags:
+        - orders
+      description: Get an order by ID.
+      operationId: getOrder
+      parameters:
+        - in: path
+          name: orderId
+          schema:
+            type: string
+          required: true
+          description: "orderId"
+          example: "00000000-0000-0000-c000-000000000001"
+      responses:
+        '200':
+          description: Return order by a given ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-response-dto'
+    delete:
+      tags:
+        - orders
+      description: Delete an order by ID.
+      operationId: deleteOrder
+      parameters:
+        - in: path
+          name: orderId
+          schema:
+            type: string
+          required: true
+          description: "orderId"
+          example: "00000000-0000-0000-c000-000000000001"
+      responses:
+        '204':
+          description: Delete order by a given ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-response-dto'
+    put:
+      tags:
+        - orders
+      description: Update an order by ID.
+      operationId: updateOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/order-update-dto'
+      parameters:
+        - in: path
+          name: orderId
+          schema:
+            type: string
+          required: true
+          description: "orderId"
+          example: "00000000-0000-0000-c000-000000000001"
+      responses:
+        '200':
+          description: Update order by a given ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-response-dto'
 components:
   schemas:
     order-request-dto:
       title: OrderRequestDto
+      required:
+        - orderName
+        - quantity
+        - price
+        - priority
       type: object
       properties:
         orderName:
@@ -51,8 +134,15 @@ components:
           minLength: 1
           maxLength: 5
           example: 1
+
     order-response-dto:
       title: OrderResponseDto
+      required:
+        - orderName
+        - orderId
+        - quantity
+        - price
+        - priority
       type: object
       properties:
         orderName:
@@ -65,6 +155,35 @@ components:
           minLength: 1
           maxLength: 36
           example: 00000000-0000-0000-c000-000000000001
+        quantity:
+          type: integer
+          minLength: 1
+          maxLength: 100
+          example: 1
+        price:
+          type: integer
+          minLength: 1
+          example: 100
+        priority:
+          type: integer
+          minLength: 1
+          maxLength: 5
+          example: 1
+
+    order-update-dto:
+      title: OrderUpdateDto
+      required:
+        - orderName
+        - quantity
+        - price
+        - priority
+      type: object
+      properties:
+        orderName:
+          type: string
+          minLength: 1
+          maxLength: 50
+          example: new Order
         quantity:
           type: integer
           minLength: 1
