@@ -118,7 +118,6 @@
                             <generatorName>spring</generatorName>
                             <library>spring-boot</library>
                             <configOptions>
-<!--                                <annotationLibrary>none</annotationLibrary>-->
                                 <apiFirst>true</apiFirst>
                                 <interfaceOnly>true</interfaceOnly>
                                 <openApiNullable>false</openApiNullable>
