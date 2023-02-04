@@ -37,7 +37,20 @@ components:
           minLength: 1
           maxLength: 50
           example: new Order
-
+        quantity:
+          type: integer
+          minLength: 1
+          maxLength: 100
+          example: 1
+        price:
+          type: integer
+          minLength: 1
+          example: 100
+        priority:
+          type: integer
+          minLength: 1
+          maxLength: 5
+          example: 1
     order-response-dto:
       title: OrderResponseDto
       type: object
@@ -47,3 +60,22 @@ components:
           minLength: 1
           maxLength: 50
           example: new Order
+        orderId:
+          type: string
+          minLength: 1
+          maxLength: 36
+          example: 00000000-0000-0000-c000-000000000001
+        quantity:
+          type: integer
+          minLength: 1
+          maxLength: 100
+          example: 1
+        price:
+          type: integer
+          minLength: 1
+          example: 100
+        priority:
+          type: integer
+          minLength: 1
+          maxLength: 5
+          example: 1
