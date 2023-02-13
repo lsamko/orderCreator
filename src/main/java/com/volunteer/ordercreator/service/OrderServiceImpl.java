@@ -25,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.fromRequestDtoToEntity(orderRequestDto);
         String orderName = orderRequestDto.getOrderName();
         if (this.orderNameExists(orderName)) {
+
             throw new OrderWithNameAlreadyExistsException(
                 String.format(orderName));
         }
@@ -40,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponseDto findById(String uuid) {
         Order order = orderRepository.findOrderById(uuid)
+
             .orElseThrow(() -> new OrderNotFoundException(uuid));
         return orderMapper.fromEntityToResponseDto(order);
     }
@@ -47,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponseDto deleteById(String uuid) {
         Order order = orderRepository.deleteOrderByOrderId(uuid)
+
             .orElseThrow(() -> new OrderNotFoundException(uuid));
         return orderMapper.fromEntityToResponseDto(order);
     }
@@ -54,9 +57,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponseDto updateById(String uuid, OrderUpdateDto orderUpdateDto) {
         Order nameToUpdate = orderRepository.findOrderById(uuid)
+
             .orElseThrow(() -> new OrderNotFoundException(uuid));
         String newOrderName = orderUpdateDto.getOrderName();
         if (this.orderNameChanged(nameToUpdate, newOrderName) && this.orderNameExists(newOrderName)) {
+
             throw new OrderWithNameAlreadyExistsException(
                 String.format("Order with name '%s' already exists", newOrderName));
         }
