@@ -1,0 +1,25 @@
+spring:
+  liquibase:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+---
+spring:
+  config.activate.on-profile: postgres
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order_creator
+    username: user
+    password: pass
+
+---
+spring:
+  config.activate.on-profile: h2
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+---
