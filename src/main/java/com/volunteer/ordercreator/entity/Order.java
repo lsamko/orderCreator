@@ -47,6 +47,14 @@ public class Order implements Serializable {
     @Column(unique = true, nullable = false)
     private String orderId;
 
+    public Order(String name, int quantity,  int priority, int price, String orderId) {
+        this.orderName = name;
+        this.quantity = quantity;
+        this.priority = priority;
+        this.price = price;
+        this.orderId = orderId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
