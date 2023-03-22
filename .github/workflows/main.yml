@@ -10,8 +10,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,15 +31,13 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.2
-
-      - name: SecureStack All-In-One GitHub Action
-        uses: SecureStackCo/actions-all-in-one@v0.1.2
+      - name: Set up Azure login
+        uses: azure/login@v1
         with:
-          # SecureStack API key - generate an API key at https://app.securestack.com
-          securestack_api_key: ${{ secrets.SECURESTACK_API_KEY }}
-          # SecureStack Application ID - can be retrieved by accessing required application at https://app.securestack.com
-          securestack_app_id: ${{ secrets.SECURESTACK_APP_ID }}
-          # Severities lower than this value will be reported in the workflow console but will not cause an error for the action; value should be one of: critical | high | medium | low
-          severity:   high
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: orderCreator
+          package: '.'
