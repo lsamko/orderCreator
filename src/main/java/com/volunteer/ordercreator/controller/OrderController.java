@@ -3,7 +3,6 @@ package com.volunteer.ordercreator.controller;
 import com.volunteer.ordercreator.dto.OrderRequestDto;
 import com.volunteer.ordercreator.dto.OrderResponseDto;
 import com.volunteer.ordercreator.dto.OrderUpdateDto;
-import com.volunteer.ordercreator.entity.Order;
 import com.volunteer.ordercreator.service.OrderService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -36,7 +35,7 @@ public class OrderController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<Order> getAllOrders(@NotNull Pageable pageable){
+    public Page<OrderResponseDto> getAllOrders(@NotNull Pageable pageable){
         return orderService.findAll(pageable);
     }
 

@@ -34,8 +34,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<Order> findAll(Pageable pageable) {
-        return orderRepository.findAll(pageable);
+    public Page<OrderResponseDto> findAll(Pageable pageable) {
+        return orderRepository.findAll(pageable).map(orderMapper::fromEntityToResponseDto) ;
     }
 
     @Override
