@@ -121,6 +121,7 @@
                             <configOptions>
                                 <annotationLibrary>none</annotationLibrary>
                                 <documentationProvider>none</documentationProvider>
+                                <importMapping>pageable=org.springframework.data.domain.Pageable</importMapping>
                                 <interfaceOnly>true</interfaceOnly>
                                 <openApiNullable>false</openApiNullable>
                                 <hideGenerationTimestamp>true</hideGenerationTimestamp>

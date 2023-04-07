@@ -11,7 +11,7 @@ paths:
       tags:
         - orders
       description: Creates an order
-      operationId: createOrders
+      operationId: createOrder
       requestBody:
         required: true
         content:
@@ -29,20 +29,29 @@ paths:
       tags:
         - orders
       description: Retrieve list of orders
-      operationId: getListOfOrders
+      operationId: getAllOrders
+      parameters:
+        - in: query
+          name: pageable
+          schema:
+            $ref: '#/components/schemas/pageable'
+          required: true
+          description: "pageable"
       responses:
         '200':
           description: The order has been created successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/order-response-dto'
+                type: array
+                items:
+                  $ref: '#/components/schemas/order-response-dto'
   /orders/{orderId}:
     get:
       tags:
         - orders
       description: Get an order by ID.
-      operationId: getOrder
+      operationId: getOrderById
       parameters:
         - in: path
           name: orderId
@@ -62,7 +71,7 @@ paths:
       tags:
         - orders
       description: Delete an order by ID.
-      operationId: deleteOrder
+      operationId: deleteOrderById
       parameters:
         - in: path
           name: orderId
@@ -74,10 +83,7 @@ paths:
       responses:
         '204':
           description: Delete order by a given ID.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/order-response-dto'
+
     put:
       tags:
         - orders
@@ -198,3 +204,25 @@ components:
           minLength: 1
           maxLength: 5
           example: 1
+    pageable:
+      title: pageable
+      required:
+        - from
+        - size
+        - sort
+      type: object
+      properties:
+        from:
+          type: integer
+          minLength: 0
+          maxLength: 50
+          example: 1
+        size:
+          type: integer
+          minLength: 10
+          maxLength: 100
+          example: 1
+        sort:
+          type: string
+          minLength: 1
+          example: ASC
